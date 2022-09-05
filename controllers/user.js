@@ -71,7 +71,7 @@ exports.register = (req, res, next) => {
   }
 
   exports.deleteUser = (req, res, next) => {
-    Comment.findOne({
+    User.findOne({
       where: { id: req.params.id }
       }).then(
       (user) => {
@@ -130,27 +130,3 @@ exports.register = (req, res, next) => {
     postView: req.body.postView,
   });
 };
-  
-// https://stackoverflow.com/questions/8158244/how-to-update-a-record-using-sequelize-for-node
-
-
-exports.modifyArticle = (req, res, next) => {
-  if (!req.body.article.content || !req.body.userId) {
-    return res.status(400).json({
-      error: 'Bad request, need user Id and article object',
-    })
-  }
-  Article.update(
-    {
-      content: req.body.article.content,
-      UserId: req.body.userId,
-    },
-    { where: { id: req.params.id } }
-  )
-    .then(() => res.status(201).json({ message: 'Article modified!' }))
-    .catch(error =>
-      res
-        .status(400)
-        .json({ message: 'Error editing post!', error })
-    )
-}
