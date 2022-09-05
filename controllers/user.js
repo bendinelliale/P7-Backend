@@ -11,13 +11,11 @@ exports.register = (req, res, next) => {
           password: hash,
           postView: '1'
         });
-        user.save().then(
-          (result) => {
-            console.log(result)
-            res.status(201).json({
-              message: 'User added successfully!'
-            });
-          }
+        user.save().then(() => {
+          res.status(201).json({
+            message: 'User added successfully!'
+          });
+        }
         ).catch(
           (error) => {
             res.status(500).json({
@@ -73,7 +71,7 @@ exports.register = (req, res, next) => {
   }
 
   exports.deleteUser = (req, res, next) => {
-    User.findOne({
+    Comment.findOne({
       where: { id: req.params.id }
       }).then(
       (user) => {
